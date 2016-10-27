@@ -16,3 +16,8 @@ Create the binaries with `go build`:
 Then, build the docker image:
 
     docker build -t whoami:v1.0 .
+
+# todos
+
+[ ] make server port configurable
+[ ] add log feature to output each request
