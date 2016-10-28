@@ -8,7 +8,7 @@ import (
 
 func helloHandler(w http.ResponseWriter, r *http.Request) {
 	h, _ := os.Hostname()
-	io.WriteString(w, h)
+	io.WriteString(w, h+"\n")
 }
 
 func main() {
