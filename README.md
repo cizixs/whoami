@@ -20,4 +20,4 @@ Then, build the docker image:
 # todos
 
 - [ ] make server port configurable
-- [ ] add log feature to output each request
+- [x] add log feature to output each request
