@@ -8,6 +8,7 @@ import (
 	"time"
 )
 
+// loggingHandler is a http middleware that logs each request
 func loggingHandler(next http.Handler) http.Handler {
 	fn := func(w http.ResponseWriter, r *http.Request) {
 		t1 := time.Now()
@@ -21,7 +22,14 @@ func loggingHandler(next http.Handler) http.Handler {
 
 func helloHandler(w http.ResponseWriter, r *http.Request) {
 	h, _ := os.Hostname()
-	io.WriteString(w, h+"\n")
+
+	// echo message if given, otherwise just echo hostname
+	msg := os.Getenv("MESSAGE")
+	if msg != "" {
+		msg += " from "
+	}
+	msg += h + "\n"
+	io.WriteString(w, msg)
 }
 
 func main() {
