@@ -12,7 +12,7 @@ This docker image can be used to demostrate and validate load balance ability of
 
 By default container exposes port `8778`, and returns container hostname(short id) as response.
 
-You can control what is returned by setting `MESAGE` environment variable(the following example is illustrated under docker 1.12 swarm mode):
+You can control what is returned by setting `MESSAGE` environment variable(the following example is illustrated under docker 1.12 swarm mode):
 
     ➜  docker service create -e MESSAGE="viola" -p 8778:8778 --replicas=2 whoami:v0.4
     ➜  curl http://127.0.0.1:8778
@@ -32,6 +32,8 @@ And every container outputs requests to stdout, which is accessible by standard 
 Create the binaries with `go build`:
 
     CGO_ENABLED=0 go build -a -ldflags '-s' .
+
+For more infromation about the parameters, please refer to [this blog](http://blog.xebia.com/create-the-smallest-possible-docker-container/).
 
 Then, build the docker image:
 
