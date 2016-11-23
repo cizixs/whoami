@@ -35,18 +35,21 @@ func helloHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func healthHandler(w http.ResponseWriter, r *http.Request) {
+	h, _ := os.Hostname()
+
 	if !isHealthy {
 		w.WriteHeader(http.StatusInternalServerError)
-		w.Write([]byte("Oops!\n"))
+		w.Write([]byte("Oops!" + " from " + h + "\n"))
 	} else {
-		io.WriteString(w, "ok\n")
+		io.WriteString(w, "ok"+" from "+h+"\n")
 	}
 }
 
 func healthToggleHandler(w http.ResponseWriter, r *http.Request) {
+	h, _ := os.Hostname()
 	if r.Method == "POST" {
 		isHealthy = !isHealthy
-		w.Write([]byte("done.\n"))
+		w.Write([]byte("done" + " from " + h + "\n"))
 	} else {
 		w.WriteHeader(http.StatusMethodNotAllowed)
 		w.Write([]byte("Sorry, only POST is allowed.\n"))
