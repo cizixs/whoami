@@ -1,5 +1,6 @@
 #!/bin/bash
 
+set -x
 set -o errexit
 
 if [[ $# != 1 ]]; then

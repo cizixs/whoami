@@ -8,6 +8,8 @@ import (
 	"time"
 )
 
+var isHealthy = true
+
 // loggingHandler is a http middleware that logs each request
 func loggingHandler(next http.Handler) http.Handler {
 	fn := func(w http.ResponseWriter, r *http.Request) {
@@ -32,10 +34,31 @@ func helloHandler(w http.ResponseWriter, r *http.Request) {
 	io.WriteString(w, msg)
 }
 
+func healthHandler(w http.ResponseWriter, r *http.Request) {
+	if !isHealthy {
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte("Oops!\n"))
+	} else {
+		io.WriteString(w, "ok\n")
+	}
+}
+
+func healthToggleHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "POST" {
+		isHealthy = !isHealthy
+		w.Write([]byte("done.\n"))
+	} else {
+		w.WriteHeader(http.StatusMethodNotAllowed)
+		w.Write([]byte("Sorry, only POST is allowed.\n"))
+	}
+}
+
 func main() {
 	http.Handle("/", loggingHandler(http.HandlerFunc(helloHandler)))
+	http.Handle("/health", loggingHandler(http.HandlerFunc(healthHandler)))
+	http.Handle("/toggle.failure", loggingHandler(http.HandlerFunc(healthToggleHandler)))
 	log.Printf("start serving...")
-	err := http.ListenAndServe(":8778", nil)
+	err := http.ListenAndServe(":3000", nil)
 	if err != nil {
 		log.Fatalf("start server error: %v\n", err)
 	}
