@@ -1,6 +1,6 @@
 # whoami
 
-A naive docker image with a http server that echos hostname(identifies itself) with health check support.
+A minimal(5.0MB+) docker image with a http server that echos hostname(identifies itself) with health check support.
 
 This docker image can be used to demostrate and validate load balance ability of your service.
 
