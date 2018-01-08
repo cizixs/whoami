@@ -16,7 +16,7 @@ func loggingHandler(next http.Handler) http.Handler {
 		t1 := time.Now()
 		next.ServeHTTP(w, r)
 		t2 := time.Now()
-		log.Printf("[%s] at %q takes %v\n", r.Method, r.URL.String(), t2.Sub(t1))
+		log.Printf("[%s] %q from %s takes %v\n", r.Method, r.URL.String(), r.RemoteAddr, t2.Sub(t1))
 	}
 
 	return http.HandlerFunc(fn)
@@ -59,7 +59,7 @@ func healthToggleHandler(w http.ResponseWriter, r *http.Request) {
 func main() {
 	http.Handle("/", loggingHandler(http.HandlerFunc(helloHandler)))
 	http.Handle("/health", loggingHandler(http.HandlerFunc(healthHandler)))
-	http.Handle("/toggle.failure", loggingHandler(http.HandlerFunc(healthToggleHandler)))
+	http.Handle("/toggle.hz", loggingHandler(http.HandlerFunc(healthToggleHandler)))
 	log.Printf("start serving...")
 	err := http.ListenAndServe(":3000", nil)
 	if err != nil {

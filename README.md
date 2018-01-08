@@ -36,11 +36,11 @@ And every container outputs requests to stdout, which is accessible by standard 
 
 `whoami` exposes a health check endpoint at `/health`, which tells you if the service is working well.
 If the service is ok, it will return `ok` with `status 200`, otherwise it will return `Oops!` with `status 500`.
-You can toggle the health status by send a post request to `/toggle.failure`:
+You can toggle the health status by send a post request to `/toggle.hz`:
 
     ➜  curl http://127.0.0.1:8007/health                  
     ok
-    ➜  curl -X POST http://127.0.0.1:8007/toggle.failure 
+    ➜  curl -X POST http://127.0.0.1:8007/toggle.hz 
     done.
     ➜  curl http://127.0.0.1:8007/health                
     Oops!%                          
